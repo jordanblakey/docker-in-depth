@@ -45,13 +45,14 @@ Services are really just "containers in production". The service codifies the
 image it's running on: Ports, Replicas for scaling, etc.
 
 Apps are defined in a `docker-compose.yml`.
-Services are containeded in apps.
+Services are contained in apps.
 
 Single containers in a service are called "tasks", numbered by replication.
 
 Swarm
 <= App (Stack (networks & services), defined in docker-compose)
-<= Services <= Containers (Tasks, instances of images)
+<= Services (collections of load-balanced Tasks)
+<= Containers (Tasks, instances of images)
 <= Images (defined in Dockerfile)
 
 ```sh
