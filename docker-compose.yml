@@ -2,7 +2,7 @@ version: "3"
 services:
   web: # Create a service named "web"
 
-    image: jordanpulsem/cd-test:part2
+    image: jordanpulsem/cd-test:latest
     deploy:
       replicas: 5 # Automatically create 5 instances of "web"
       resources:

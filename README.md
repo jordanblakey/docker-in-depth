@@ -6,10 +6,10 @@
 brew cask install docker
 docker # Get commands
 docker —version
-docker version -f {{.Server.Experimental}}] # Check if experimental mode enabled
+docker version -f {{.Server.Experimental}} # Check if experimental mode enabled
 docker-compose # Define and run multi-container applications with Docker.
 docker-machine # Create and manage machines running Docker. (Remotely manage instances of # docker)
-docker info
+docker info # All High Level info
 /Applications/Docker.app/Contents/MacOS/Docker --uninstall # uninstall Docker
 docker container —help # get commands for a subcommand
 docker container logs <container name>
@@ -19,7 +19,7 @@ docker container logs <container name>
 
 ``` sh
 docker build -t friendlyhello . # Create image using this directory's Dockerfile
-docker run -p 4000:80 friendlyhello # Run "friendlyname" mapping port 4000 to 80
+docker run -p 4000:80 friendlyhello # Run "friendlyhello" mapping port 4000 to 80
 docker run -d -p 4000:80 friendlyhello        # Same thing, but in detached mode
 docker container ls                # List all running containers. Alt: docker ps
 docker container ls -q                          # Get ids for running containers
@@ -67,4 +67,34 @@ docker service ps getstartedlab_web                 # List service tasks details
 docker inspect <task or container>                   # Inspect task or container
 docker stack rm getstartedlab                        # Take down the stack (app)
 docker swarm leave --force                                 # Take down the swarm
+```
+
+## Swarms
+
+### Creation
+
+```sh
+docker-machine create --driver virtualbox myvm1 # Create physical machines (VMs) to add to the swarm.
+docker-machine create --driver virtualbox myvm2
+docker-machine stop myvm1 myvm2
+docker-machine start myvm1 myvm2
+docker-machine ls # list all machines
+docker-machine ssh myvm1 # ssh into VM
+docker swarm init --advertise-addr 192.168.99.100:2377 # This is the VMs IP, command ran via SSH
+docker-machine ssh myvm2 # Add the second VM as a worker
+docker swarm join --token SWMTKN-1-0cxjaatw725lbatu2zhrl8i101f7fpuyrwiifytli8q55rd8sc-dh3ravhyxx9eyz712k7v0qkuy 192.168.99.100:2377
+docker-machine ssh myvm1
+docker swarm join-token manager # Get a token to add a node as a manager
+```
+
+### Management
+
+```sh
+docker node ls # List all nodes in the swarm
+docker node demote <id> # demote node from swarm manager
+docker node promote <id> # promote node to swarm manager
+docker node inspect <id> # detailed info on a node
+docker node ps # list tasks running
+docker node rm
+docker node update
 ```
