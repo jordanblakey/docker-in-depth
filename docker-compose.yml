@@ -1,19 +1,12 @@
-version: "3"
+version: "3.8"
 services:
-  web: # Create a service named "web"
-
-    image: jordanpulsem/cd-test:latest
-    deploy:
-      replicas: 5 # Automatically create 5 instances of "web"
-      resources:
-        limits:
-          cpus: "0.1" # 10% CPU max
-          memory: 50M # 50MB RAM max
-      restart_policy:
-        condition: on-failure # Immediately restart on failure
+  web:
+    build: .
     ports:
-      - "4000:80" # Map host:4000 to web:80
-    networks:
-      - webnet # Share port 80 via a load-balanced network, "webnet"
-networks:
-  webnet: # Define the "webnet" network with default settings (load-balanced overlay)
+      - "5000:5000"
+    volumes:
+      - .:/code
+    environment:
+      FLASK_ENV: development
+  redis:
+    image: "redis:alpine"
