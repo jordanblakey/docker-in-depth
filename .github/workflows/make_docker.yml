@@ -9,8 +9,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # permissions:
+    #   contents: read # Allows checkout
+    #   packages: write # Grants permission to push packages
 
     steps:
+      - name: inspect permissions
+        run: |
+          echo "GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}"
+          echo "GITHUB_REPOSITORY: ${{ github.repository }}"
+          echo "GITHUB_ACTOR: ${{ github.actor }}"
+          gh auth status
+
       - uses: actions/checkout@v4
 
       - name: docker build
