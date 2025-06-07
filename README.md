@@ -89,7 +89,7 @@ docker push username/repository:tag # Upload tagged image to the registry
 docker run username/repository:tag # Run an image from the registry
 ```
 
-## New
+## Refresher 2025
 
 ```sh
 docker images --filter dangling=true # list images not associated with any tagged image
@@ -107,4 +107,15 @@ echo "echo 'hello from main.sh'" > main.sh
 # COPY . .
 # CMD ["./main.sh"]
 # arb scripts go brr...
+
+docker system info # list info about docker installation inc registries
+
+# https://hub.docker.com/repositories/jordantblakey
+# pull a tagged image from docker hub
+docker pull jordantblakey/blender:latest
+
+# build and push to docker hub
+docker build -t jordantblakey/alpine_scripting:latest .
+docker push jordantblakey/alpine_scripting:latest
+# use tab completions when typing etc
 ```
