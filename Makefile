@@ -16,6 +16,9 @@ build:
 push: build
 	docker push $(IMAGE_NAME):$(IMAGE_TAG)
 
+run:
+	docker run --rm $(IMAGE_NAME):$(IMAGE_TAG)
+
 pull:
 	docker pull $(IMAGE_NAME):$(IMAGE_TAG)
 
