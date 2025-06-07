@@ -125,5 +125,10 @@ https://github.com/users/jordanblakey/packages/container/alpine_scripting/settin
 # watch runs on push and re-run if github settings change
 https://github.com/jordanblakey/docker-in-depth/actions
 
-# test locally
+# test the actions workflow locally (requires act extension for gh cli)
+gh act
+
+# build and push ghcr.io/jordanblakey/gh_actions_runner
+# the main actions workflow uses this container, which contains docker, make, and nodejs
+make update_runner
 ```
