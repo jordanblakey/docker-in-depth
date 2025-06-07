@@ -1,4 +1,3 @@
-import time
 # import redis
 from flask import Flask
 
@@ -6,6 +5,7 @@ app = Flask(__name__)
 # cache = redis.Redis(host='redis', port=6379)
 
 count = 0
+
 
 def get_hit_count(count):
     count += 1
@@ -21,7 +21,9 @@ def get_hit_count(count):
     #         time.sleep(0.5)
 
 
-@app.route('/')
+@app.route("/")
 def hello():
-    globals()['count'] = get_hit_count(globals()['count'])
-    return 'Hello from Docker! I have been seen {} times.\n'.format(globals()['count'])
+    globals()["count"] = get_hit_count(globals()["count"])
+    return "Hello from Docker! I have been seen {} times.\n".format(
+        globals()["count"]
+    )
