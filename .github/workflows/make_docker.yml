@@ -19,7 +19,6 @@ jobs:
           echo "GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}"
           echo "GITHUB_REPOSITORY: ${{ github.repository }}"
           echo "GITHUB_ACTOR: ${{ github.actor }}"
-          gh auth status
 
       - uses: actions/checkout@v4
 
