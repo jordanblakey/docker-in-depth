@@ -15,7 +15,8 @@ jobs:
 
     steps:
       - name: login to GitHub CLI
-        run: "gh auth login --with-token < ${{ secrets.GITHUB_TOKEN }}"
+        run: |
+          gh auth login --with-token < ${{ secrets.GITHUB_TOKEN }}
 
       - name: inspect permissions
         run: |
