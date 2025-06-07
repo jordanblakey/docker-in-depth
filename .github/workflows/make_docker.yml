@@ -9,9 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read # Allows checkout
-      packages: write # Grants permission to push packages
+    # permissions:
+    #   contents: read # Allows checkout
+    #   packages: write # Grants permission to push packages
 
     steps:
       - name: login to GitHub CLI
@@ -28,12 +28,12 @@ jobs:
       - name: docker run
         run: make run
 
-      - name: docker login
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+      # - name: docker login
+      #   uses: docker/login-action@v2
+      #   with:
+      #     registry: ghcr.io
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: docker push
         run: make push

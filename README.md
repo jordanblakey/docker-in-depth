@@ -118,4 +118,7 @@ docker pull jordantblakey/blender:latest
 docker build -t jordantblakey/alpine_scripting:latest .
 docker push jordantblakey/alpine_scripting:latest
 # use tab completions when typing etc
+
+# note that the package needs to have the repo added in Manage Actions access
+https://github.com/users/jordanblakey/packages/container/alpine_scripting/settings
 ```
