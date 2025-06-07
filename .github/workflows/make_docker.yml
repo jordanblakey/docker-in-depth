@@ -9,6 +9,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/jordanblakey/gh_actions_runner:latest
+      options: --user root
 
     steps:
       - name: login to GitHub CLI
@@ -18,6 +21,9 @@ jobs:
           echo "GITHUB_ACTOR: ${{ github.actor }}"
 
       - uses: actions/checkout@v4
+
+      - name: install dependencies
+        run: apk add make nodejs
 
       - name: docker build
         run: make build

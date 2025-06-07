@@ -121,4 +121,9 @@ docker push jordantblakey/alpine_scripting:latest
 
 # note that the package needs to have the repo added in Manage Actions access
 https://github.com/users/jordanblakey/packages/container/alpine_scripting/settings
+
+# watch runs on push and re-run if github settings change
+https://github.com/jordanblakey/docker-in-depth/actions
+
+# test locally
 ```
