@@ -9,12 +9,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read # Needed for checkout
+      packages: read # Grants permission to pull packages from ghcr.io
     container:
       image: ghcr.io/jordanblakey/gh_actions_runner:latest
       options: --user root
 
     steps:
-      - name: login to GitHub CLI
+      - name: check github context
         run: |
           echo "GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}"
           echo "GITHUB_REPOSITORY: ${{ github.repository }}"
