@@ -22,7 +22,8 @@ What do we mean when we say Docker?
 
 ### Docker Compose: A tool for defining and running multi-container Docker applications.
 
-- Step 1: define your app's environment with a Dockerfile so it can be reproduced.
+- Step 1: define your app's environment with a Dockerfile so it can be
+  reproduced.
 - Step 2: Define the services that make up your app in a docker-compose.yml
 - Step 3: Run docker-compose up and Compose starts and runs your entire app.
 
@@ -48,7 +49,9 @@ volumes:
 
 ### Docker Hub
 
-Docker Hub is a repository for sharing and versioning `container images`. It also features Teams/Orgs, Official Images, Automatic Builds (based on code repos), and Webhooks.
+Docker Hub is a repository for sharing and versioning `container images`. It
+also features Teams/Orgs, Official Images, Automatic Builds (based on code
+repos), and Webhooks.
 
 ## docker-compose CLI Commands
 
@@ -72,6 +75,7 @@ docker run -d -p 4000:80 friendlyhello # Same, but in detached mode
 docker container ls # List running containers
 docker container ls -q # Get IDs for running containers
 docker container ls -a # Get all containers, including those not running
+docker container ls -aq
 docker container stop <id or name> # Gracefully stop a container
 docker container kill <id or name> # Forcefully stop a container
 docker container rm <id or name> # Remove container from machine
@@ -83,5 +87,24 @@ docker login # Login to Docker Hub
 docker tag <image> username/repository:tag # Tag <image> for upload to the registry
 docker push username/repository:tag # Upload tagged image to the registry
 docker run username/repository:tag # Run an image from the registry
+```
 
+## New
+
+```sh
+docker images --filter dangling=true # list images not associated with any tagged image
+docker image prune # remove those images
+docker image prune --all # remove all unused images, not just dangling ones
+docker system prune --all # remove all stopped images, unused containers, networks, and clean build cache
+docker stop $(docker ps --all --quiet) # stop all running containers
+docker container prune # remove all stopped containers
+docker build --tag simple_test . # build a container from the Dockerfile in the current dir and name it simple_test
+
+# build and run in one command, use this to dev your docker file
+docker build -t simple_test . && docker run simple_test
+echo "echo 'hello from main.sh'" > main.sh
+# WORKDIR /app
+# COPY . .
+# CMD ["./main.sh"]
+# arb scripts go brr...
 ```
