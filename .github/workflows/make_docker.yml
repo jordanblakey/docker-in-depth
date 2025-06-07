@@ -7,37 +7,36 @@ on:
     branches: ["master"]
 
 jobs:
-  build:
+  build-in-container:
     runs-on: ubuntu-latest
     permissions:
       contents: read # Needed for checkout
       packages: read # Grants permission to pull packages from ghcr.io
-
+    container:
+      image: ghcr.io/jordanblakey/gh_actions_runner:latest
+      options: --user root
     steps:
-      - name: check github context
-        run: |
-          echo "GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}"
-          echo "GITHUB_REPOSITORY: ${{ github.repository }}"
-          echo "GITHUB_ACTOR: ${{ github.actor }}"
-
       - uses: actions/checkout@v4
-
-      - name: docker build (in custom container)
+      - name: install dependencies
+        run: apk add make nodejs
+      - name: docker build
         run: make build
-        container:
-          image: ghcr.io/jordanblakey/gh_actions_runner:latest
-          options: --user root
 
-      # Other steps run on the default runner environment
+  rest-of-steps:
+    runs-on: ubuntu-latest
+    needs: build-in-container
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - uses: actions/checkout@v4
       - name: docker run
         run: make run
-
       - name: docker login
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
       - name: docker push
         run: make push
