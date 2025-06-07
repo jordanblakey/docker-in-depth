@@ -2,23 +2,29 @@ name: Makefile CI - Build, run, push container
 
 on:
   push:
-    branches: [ "master" ]
+    branches: ["master"]
   pull_request:
-    branches: [ "master" ]
+    branches: ["master"]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: docker build
-      run: make build
+      - name: docker build
+        run: make build
 
-    - name: docker run
-      run: make run
+      - name: docker run
+        run: make run
 
-    - name: docker push
-      run: make push
+      - name: docker login
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: docker push
+        run: make push
