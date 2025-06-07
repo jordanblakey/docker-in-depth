@@ -1,5 +1,7 @@
 FROM docker:latest
 
+LABEL org.opencontainers.image.source=https://github.com/jordanblakey/docker-in-depth
+
 WORKDIR /app
 
 COPY . .
