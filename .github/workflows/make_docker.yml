@@ -12,9 +12,6 @@ jobs:
     permissions:
       contents: read # Needed for checkout
       packages: read # Grants permission to pull packages from ghcr.io
-    container:
-      image: ghcr.io/jordanblakey/gh_actions_runner:latest
-      options: --user root
 
     steps:
       - name: check github context
@@ -25,16 +22,16 @@ jobs:
 
       - uses: actions/checkout@v4
 
-      - name: docker build
+      - name: docker build (in custom container)
         run: make build
+        container:
+          image: ghcr.io/jordanblakey/gh_actions_runner:latest
+          options: --user root
 
+      # Other steps run on the default runner environment
       - name: docker run
         run: make run
 
-  push:
-    runs-on: ubuntu-latest
-
-    steps:
       - name: docker login
         uses: docker/login-action@v2
         with:
